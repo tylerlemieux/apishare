@@ -1,0 +1,21 @@
+API Share Project Structure
+-Properties : Contains Application Information 
+-References : Contains library and api references
+-App_Data and App_Start : Pregenerated
+-Content : Contains CSS Stylesheets
+-Controllers : Controller classes that have methods to handle actions and requests
+-fonts : glyphicons etc from bootstrap
+-Models : classes for modeling data
+-Scripts : javascript files and javascript included files
+-ViewModels : classes that contain data formatting to be passed to views
+-Views : Razor (.cshtml - almost html, but allows c# like syntax to access data from the server)
+	 files that control what the user sees on the page
+-favicon : website icon
+-Global.asax : pregenerated
+-Packages.config : xml that defines packages 
+-Project_Readme.html : pregenerated
+-Startup.cs : pregenerated
+-Web.config : web config file
+
+-ADDITIONAL NOTE : App_Start/RouteConfig.cs is a class that defines the routing for the application.
+	This file might be untouched unless I need to change how the url is formatted

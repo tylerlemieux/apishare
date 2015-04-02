@@ -5,6 +5,11 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIShare", "APIShare\APIShare.csproj", "{E2E848BD-C5AC-4570-BFA0-7306D3E978F0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{85E7D244-82EB-4A67-92D9-072F3F11C58E}"
+	ProjectSection(SolutionItems) = preProject
+		Contents.txt = Contents.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

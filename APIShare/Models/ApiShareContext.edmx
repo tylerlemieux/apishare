@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="APIShareModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bookmark">
+          <Key>
+            <PropertyRef Name="BookmarkID" />
+          </Key>
+          <Property Name="BookmarkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="1000" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Website" Type="varchar" MaxLength="1000" />
+          <Property Name="AddedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BookmarkTag">
+          <Key>
+            <PropertyRef Name="BookmarkTagID" />
+          </Key>
+          <Property Name="BookmarkTagID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookmarkID" Type="int" Nullable="false" />
+          <Property Name="TagID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Follower">
+          <Key>
+            <PropertyRef Name="FollowingID" />
+          </Key>
+          <Property Name="FollowingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FollowerID" Type="int" Nullable="false" />
+          <Property Name="UserBeingFollowedID" Type="int" Nullable="false" />
+          <Property Name="FollowDate" Type="datetime" />
+          <Property Name="AllowFollow" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="RatingID" />
+          </Key>
+          <Property Name="RatingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookmarkID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagID" />
+          </Key>
+          <Property Name="TagID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tag" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Salt" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Avatar" Type="image" />
+          <Property Name="Bio" Type="text" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="UserBookmark">
+          <Key>
+            <PropertyRef Name="UserBookmarkID" />
+          </Key>
+          <Property Name="UserBookmarkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookmarkID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" />
+          <Property Name="Favorited" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="UserSkill">
+          <Key>
+            <PropertyRef Name="UserSkillID" />
+          </Key>
+          <Property Name="UserSkillID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_UserSkill_UserSkill">
+          <End Role="UserSkill" Type="Self.UserSkill" Multiplicity="1" />
+          <End Role="UserSkill1" Type="Self.UserSkill" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserSkill">
+              <PropertyRef Name="UserSkillID" />
+            </Principal>
+            <Dependent Role="UserSkill1">
+              <PropertyRef Name="UserSkillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="APIShareModelStoreContainer">
+          <EntitySet Name="Bookmark" EntityType="Self.Bookmark" Schema="lemieuxapi" store:Type="Tables" />
+          <EntitySet Name="BookmarkTag" EntityType="Self.BookmarkTag" Schema="lemieuxapi" store:Type="Tables" />
+          <EntitySet Name="Follower" EntityType="Self.Follower" Schema="lemieuxapi" store:Type="Tables" />
+          <EntitySet Name="Rating" EntityType="Self.Rating" Schema="lemieuxapi" store:Type="Tables" />
+          <EntitySet Name="Tag" EntityType="Self.Tag" Schema="lemieuxapi" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="lemieuxapi" store:Type="Tables" />
+          <EntitySet Name="UserBookmark" EntityType="Self.UserBookmark" Schema="lemieuxapi" store:Type="Tables" />
+          <EntitySet Name="UserSkill" EntityType="Self.UserSkill" Schema="lemieuxapi" store:Type="Tables" />
+          <AssociationSet Name="FK_UserSkill_UserSkill" Association="Self.FK_UserSkill_UserSkill">
+            <End Role="UserSkill" EntitySet="UserSkill" />
+            <End Role="UserSkill1" EntitySet="UserSkill" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="APIShareModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bookmark">
+          <Key>
+            <PropertyRef Name="BookmarkID" />
+          </Key>
+          <Property Name="BookmarkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Website" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="AddedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="BookmarkTag">
+          <Key>
+            <PropertyRef Name="BookmarkTagID" />
+          </Key>
+          <Property Name="BookmarkTagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookmarkID" Type="Int32" Nullable="false" />
+          <Property Name="TagID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Follower">
+          <Key>
+            <PropertyRef Name="FollowingID" />
+          </Key>
+          <Property Name="FollowingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FollowerID" Type="Int32" Nullable="false" />
+          <Property Name="UserBeingFollowedID" Type="Int32" Nullable="false" />
+          <Property Name="FollowDate" Type="DateTime" Precision="3" />
+          <Property Name="AllowFollow" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="RatingID" />
+          </Key>
+          <Property Name="RatingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookmarkID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Rating1" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagID" />
+          </Key>
+          <Property Name="TagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tag1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AddedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salt" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Bio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserBookmark">
+          <Key>
+            <PropertyRef Name="UserBookmarkID" />
+          </Key>
+          <Property Name="UserBookmarkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookmarkID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="Favorited" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserSkill">
+          <Key>
+            <PropertyRef Name="UserSkillID" />
+          </Key>
+          <Property Name="UserSkillID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserSkill1" Relationship="Self.FK_UserSkill_UserSkill" FromRole="UserSkill" ToRole="UserSkill1" />
+          <NavigationProperty Name="UserSkill2" Relationship="Self.FK_UserSkill_UserSkill" FromRole="UserSkill1" ToRole="UserSkill" />
+        </EntityType>
+        <Association Name="FK_UserSkill_UserSkill">
+          <End Role="UserSkill" Type="Self.UserSkill" Multiplicity="1" />
+          <End Role="UserSkill1" Type="Self.UserSkill" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserSkill">
+              <PropertyRef Name="UserSkillID" />
+            </Principal>
+            <Dependent Role="UserSkill1">
+              <PropertyRef Name="UserSkillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="APIToolEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bookmarks" EntityType="Self.Bookmark" />
+          <EntitySet Name="BookmarkTags" EntityType="Self.BookmarkTag" />
+          <EntitySet Name="Followers" EntityType="Self.Follower" />
+          <EntitySet Name="Ratings" EntityType="Self.Rating" />
+          <EntitySet Name="Tags" EntityType="Self.Tag" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserBookmarks" EntityType="Self.UserBookmark" />
+          <EntitySet Name="UserSkills" EntityType="Self.UserSkill" />
+          <AssociationSet Name="FK_UserSkill_UserSkill" Association="Self.FK_UserSkill_UserSkill">
+            <End Role="UserSkill" EntitySet="UserSkills" />
+            <End Role="UserSkill1" EntitySet="UserSkills" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="APIShareModelStoreContainer" CdmEntityContainer="APIToolEntities">
+          <EntitySetMapping Name="Bookmarks">
+            <EntityTypeMapping TypeName="APIShareModel.Bookmark">
+              <MappingFragment StoreEntitySet="Bookmark">
+                <ScalarProperty Name="BookmarkID" ColumnName="BookmarkID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookmarkTags">
+            <EntityTypeMapping TypeName="APIShareModel.BookmarkTag">
+              <MappingFragment StoreEntitySet="BookmarkTag">
+                <ScalarProperty Name="BookmarkTagID" ColumnName="BookmarkTagID" />
+                <ScalarProperty Name="BookmarkID" ColumnName="BookmarkID" />
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Followers">
+            <EntityTypeMapping TypeName="APIShareModel.Follower">
+              <MappingFragment StoreEntitySet="Follower">
+                <ScalarProperty Name="FollowingID" ColumnName="FollowingID" />
+                <ScalarProperty Name="FollowerID" ColumnName="FollowerID" />
+                <ScalarProperty Name="UserBeingFollowedID" ColumnName="UserBeingFollowedID" />
+                <ScalarProperty Name="FollowDate" ColumnName="FollowDate" />
+                <ScalarProperty Name="AllowFollow" ColumnName="AllowFollow" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="APIShareModel.Rating">
+              <MappingFragment StoreEntitySet="Rating">
+                <ScalarProperty Name="RatingID" ColumnName="RatingID" />
+                <ScalarProperty Name="BookmarkID" ColumnName="BookmarkID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Rating1" ColumnName="Rating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="APIShareModel.Tag">
+              <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+                <ScalarProperty Name="Tag1" ColumnName="Tag" />
+                <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="APIShareModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="Bio" ColumnName="Bio" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserBookmarks">
+            <EntityTypeMapping TypeName="APIShareModel.UserBookmark">
+              <MappingFragment StoreEntitySet="UserBookmark">
+                <ScalarProperty Name="UserBookmarkID" ColumnName="UserBookmarkID" />
+                <ScalarProperty Name="BookmarkID" ColumnName="BookmarkID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Favorited" ColumnName="Favorited" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSkills">
+            <EntityTypeMapping TypeName="APIShareModel.UserSkill">
+              <MappingFragment StoreEntitySet="UserSkill">
+                <ScalarProperty Name="UserSkillID" ColumnName="UserSkillID" />
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

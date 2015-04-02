@@ -10,6 +10,7 @@ namespace APIShare.Controllers
     {
         public ActionResult Index()
         {
+            Session["test"] = "Hello this is some random message to see if sessions work";
             return View();
         }
 
@@ -26,5 +27,13 @@ namespace APIShare.Controllers
 
             return View();
         }
+
+        public ActionResult SessionTest()
+        {
+            ViewBag.Message = Session["test"];
+
+            return View();
+        }
+   
     }
 }

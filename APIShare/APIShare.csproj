@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -158,15 +160,60 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\BookmarkController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApiShareContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApiShareContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApiShareContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApiShareContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApiShareContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApiShareContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Bookmark.cs">
+      <DependentUpon>ApiShareContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BookmarkTag.cs">
+      <DependentUpon>ApiShareContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Follower.cs">
+      <DependentUpon>ApiShareContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Rating.cs">
+      <DependentUpon>ApiShareContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tag.cs">
+      <DependentUpon>ApiShareContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>ApiShareContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserBookmark.cs">
+      <DependentUpon>ApiShareContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserSkill.cs">
+      <DependentUpon>ApiShareContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BookmarkVM.cs" />
+    <Compile Include="ViewModels\SearchVM.cs" />
+    <Compile Include="ViewModels\UserVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -175,8 +222,26 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\ApiShareContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ApiShareContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ApiShareContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ApiShareContext.edmx</DependentUpon>
+      <LastGenOutput>ApiShareContext.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ApiShareContext.edmx.diagram">
+      <DependentUpon>ApiShareContext.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\ApiShareContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ApiShareContext.edmx</DependentUpon>
+      <LastGenOutput>ApiShareContext.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -205,9 +270,17 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Home\SessionTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Bookmark\" />
+    <Folder Include="Models\Helpers\" />
+    <Folder Include="Models\Search\" />
+    <Folder Include="Models\User\" />
+    <Folder Include="Views\Bookmark\" />
+    <Folder Include="Views\Search\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -215,6 +288,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
