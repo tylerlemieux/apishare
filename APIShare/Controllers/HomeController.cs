@@ -21,10 +21,8 @@ namespace APIShare.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult LandingPage()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 
