@@ -48,7 +48,7 @@ namespace APIShare.Controllers
         public JsonResult AddBookmark()
         {
             throw new NotImplementedException();
-            return Json();
+            return Json(false);
         }
     }
 }

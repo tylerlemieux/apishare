@@ -1,5 +1,111 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - API Share</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script>
+        $(document).ready(function () {
+            $('#login').click(function () {
+                var username = $('#login-username').val();
+                var password = $('#login-password').val();
 
+                $.ajax({
+                    url: "/Authentication/Login",
+                    method: 'post',
+                    data: { username: username, password: password },
+                    success: function (result) {
+                        if (result.Success === true) {
+                            window.location = "/Home/"
+                        }
+                        else {
+                            $('#login-error').html('<div class="alert alert-danger">Username/Password combo does not exist</div>');
+                        }
+                    }
+                });
+            });
+
+            $('#register').click(function () {
+                var username = $('#registration-username').val();
+                var email = $('#registration-email').val();
+                var password = $('#registration-password').val();
+                var confirmPassword = $('#registration-confirm-password').val();
+                if (confirmPassword === password) {
+                    alert("sending ajax");
+                    $.ajax({
+                        url: "/Authentication/Register",
+                        method: 'post',
+                        data: { username: username, password: password, email: email },
+                        success: function (result) {
+                            if (result.Success === true) {
+                                window.location = "/Home/"
+                            }
+                            else {
+                                $('#login-error').html('<div class="alert alert-danger">'+result.ErrorMessage+'</div>');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="background-color: orangered; min-height:300px">
+            <div class="col-md-12">
+                <!-- TODO some sort of page header here -->
+            </div>
+        </div>
+        <div class="row" style="background-color: blueviolet; min-height:300px">
+            <div class="col-md-6" id="login-pane">
+                <h2>Login</h2>
+                <div id="login-error"></div>
+                <input class="form-control" type="text" id="login-username" placeholder="Username" />
+                <input class="form-control" type="password" id="login-password" placeholder="Password" />
+                <button id="login" class="btn btn-primary btn-lg">Login</button>
+            </div>
+            <div class="col-md-6" id="registration-pane">
+                <h2>Register</h2>
+                <div class="input-group">
+                    <input class="form-control" type="text" id="registration-username" placeholder="Username" />
+                    <span class="input-group-addon" id="username-validation">
+                        <span class="glyphicon glyphicon-remove" />
+                        <span class="glyphicon glyphicon-ok" style="display: none" />
+                    </span>
+                </div>
+                <div class="input-group">
+                    <input class="form-control" type="text" id="registration-email" placeholder="Email" />
+                    <span class="input-group-addon" id="email-validation">
+                        <span class="glyphicon glyphicon-remove" />
+                        <span class="glyphicon glyphicon-ok" style="display: none" />
+                    </span>
+                </div>
+                <div class="input-group">
+                    <input class="form-control" type="password" id="registration-password" placeholder="Password" />
+                    <span class="input-group-addon" id="password-validation">
+                        <span class="glyphicon glyphicon-remove" />
+                        <span class="glyphicon glyphicon-ok" style="display: none" />
+                    </span>
+                </div>
+                <div class="input-group">
+                    <input class="form-control" type="password" id="registration-confirm-password" placeholder="Confirm Password" />
+                    <span class="input-group-addon" id="confirm-password-validation">
+                        <span class="glyphicon glyphicon-remove" />
+                        <span class="glyphicon glyphicon-ok" style="display: none" />
+                    </span>
+                </div>
+                <button id="register" class="btn btn-primary btn-lg">Register</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

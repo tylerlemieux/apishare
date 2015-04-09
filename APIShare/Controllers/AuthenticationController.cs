@@ -41,6 +41,8 @@ namespace APIShare.Controllers
                     {
                         //User exists... start the session
                         Session["UserID"] = user.UserID;
+                        Session["Username"] = user.Username;
+                        return Json(new { Success = true });
                     }
                     else
                     {
@@ -60,12 +62,12 @@ namespace APIShare.Controllers
         }
 
         [HttpPost]
-        [ActionName("Registration")]
+        [ActionName("Register")]
         public JsonResult RegistrationSubmit(string username, string password, string email)
         {
             using(APIToolEntities context = new APIToolEntities())
             {
-                if (username != null && password != null && email != null)
+                if (username != "" && username != null && password != "" && password != null && email != ""  && email != null)
                 {
                     var usersWithEmailAndPass = context.Users.Where(s => username == s.Username || email == s.Email);
                     if (usersWithEmailAndPass.Count() == 0)
@@ -81,6 +83,10 @@ namespace APIShare.Controllers
 
                         context.Users.Add(user);
                         context.SaveChanges();
+
+                        //Start the user's session
+                        Session["UserID"] = user.UserID;
+                        Session["Username"] = user.Username;
 
                         return Json(new { Success = true });
                     }
