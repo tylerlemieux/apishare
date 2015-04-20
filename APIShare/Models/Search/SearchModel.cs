@@ -15,9 +15,8 @@ namespace APIShare.Models.Search
         public static SearchVM Search(string searchString) 
         {
             SearchVM viewModel = new SearchVM();
-            var libraries = SearchLibraries(searchString);
-            var users = SearchUsers(searchString);
-
+            viewModel.Libraries = SearchLibraries(searchString);
+            viewModel.Users = SearchUsers(searchString);
 
             return viewModel;
         }

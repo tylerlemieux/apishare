@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using APIShare.Models.Search;
 
 namespace APIShare.Controllers
 {
@@ -26,8 +27,8 @@ namespace APIShare.Controllers
         [HttpGet]
         public JsonResult Search(string searchString)
         {
-            throw new NotImplementedException();
-            return Json(false);
+            var searchResults = SearchModel.Search(searchString);
+            return Json(searchResults);
         }
     }
 }

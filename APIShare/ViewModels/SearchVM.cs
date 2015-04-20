@@ -7,8 +7,8 @@ namespace APIShare.ViewModels
 {
     public class SearchVM
     {
-        List<SearchLibraryResult> Libraries { get; set; }
-        List<SearchUserResult> Users { get; set; }
+        public List<SearchLibraryResult> Libraries { get; set; }
+        public List<SearchUserResult> Users { get; set; }
     }
 
     public class SearchUserResult
