@@ -17,12 +17,14 @@ namespace APIShare.Controllers
         /// <returns></returns>
         public ActionResult Index(string searchString)
         {
-            return View();
+            var searchResults = SearchModel.Search(searchString);
+            return View(searchResults);
         }
 
         /// <summary>
         /// Takes in a search string and searches through api's and users (via a model)
         /// </summary>
+        /// <param name="searchString"></param>
         /// <returns>Object with found users and apis</returns>
         [HttpGet]
         public JsonResult Search(string searchString)
