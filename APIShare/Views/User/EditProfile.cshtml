@@ -1,0 +1,47 @@
+﻿@model APIShare.ViewModels.UserVM
+@{
+    ViewBag.Title = "EditProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Profile</h2>
+
+<div class="edit-panel" data-type="bio">
+    Bio: <div class="current-val">@Model.Bio</div><button class="btn btn-sm btn-default edit-button"><span class="glyphicon glyphicon-edit"></span></button>
+    <textarea class="edit-val-text" style="display: none"></textarea><button style="display: none" class="save-info">Save Changes</button>
+</div>
+<div class="edit-panel">
+
+</div>
+
+@section scripts{
+    <script>
+        $('.edit-button').click(function () {
+            var display = $(this).siblings('.current-val');
+            var editValText = $(this).siblings('.edit-val-text');
+            editValText.val(display.text());
+            display.hide();
+            $(this).hide();
+
+            editValText.show();
+            $(this).siblings('.save-info').show();
+        });
+
+        $('.save-info').click(function () {
+            var display = $(this).siblings('.current-val');
+            var editValText = $(this).siblings('.edit-val-text');
+            var editButton = $(this).siblings('.edit-button');
+
+            display.text(editValText.val());
+            editValText.hide();
+            $(this).hide();
+            
+            editButton.show();
+            display.show();
+            
+            var dataType = $(this).parent().data('type');
+            //TODO: AJAX TO ACTUALLY UPDATE THE FIELD
+
+        });
+    </script>
+}
