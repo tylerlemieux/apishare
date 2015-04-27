@@ -32,7 +32,7 @@ namespace APIShare.Controllers
         /// </summary>
         /// <returns>json result with success</returns>
         [HttpPost]
-        public JsonResult Follow()
+        public JsonResult Follow(int userToFollowId)
         {
             throw new NotImplementedException();
             return Json(false);
@@ -43,7 +43,7 @@ namespace APIShare.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete]
-        public JsonResult Unfollow()
+        public JsonResult Unfollow(int userToUnfollowId)
         {
             throw new NotImplementedException();
             return Json(false);

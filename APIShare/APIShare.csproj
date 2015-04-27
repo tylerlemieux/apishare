@@ -194,6 +194,7 @@
       <DependentUpon>ApiShareContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Helpers\SecurityHelper.cs" />
+    <Compile Include="Models\Helpers\TagHelper.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Rating.cs">
@@ -216,6 +217,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BookmarkVM.cs" />
     <Compile Include="ViewModels\SearchVM.cs" />
+    <Compile Include="ViewModels\TagVM.cs" />
     <Compile Include="ViewModels\UserVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -277,13 +279,13 @@
     <Content Include="Views\Authentication\Register.cshtml" />
     <Content Include="Views\Home\LandingPage.cshtml" />
     <Content Include="Views\User\User.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Bookmark\AddBookmark.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Bookmark\" />
     <Folder Include="Models\User\" />
-    <Folder Include="Views\Bookmark\" />
-    <Folder Include="Views\Search\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

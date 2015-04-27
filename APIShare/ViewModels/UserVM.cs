@@ -10,13 +10,6 @@ namespace APIShare.ViewModels
         public int UserID { get; set; }
         public string Username { get; set; }
         public string Bio { get; set; }
-        //{
-        //    get { return Bio; } 
-        //    set 
-        //    {
-        //        Bio = value ?? "";
-        //    }
-        //}
 
         public List<Tag> Skills { get; set; }
         public List<BookmarkVM> Bookmarks { get; set; }

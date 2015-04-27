@@ -1,7 +1,10 @@
 ﻿@model APIShare.ViewModels.UserVM
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Home Page";
 }
+@if(Model != null)
+{ 
 <div class="jumbotron">
     <div class="row">
         <div class="col-md-3">
@@ -12,7 +15,15 @@
             <p class="lead">
                 @Model.Bio
             </p>
-            <p>tags go here</p>
+            <p>
+                @foreach(var skill in Model.Skills)
+                {
+                    <div class="bg-info tag">
+                        <!-- TODO add search link -->
+                        <a href="">@skill.Tag1</a>
+                    </div>
+                }
+            </p>
         </div>
     </div>
 </div>
@@ -21,13 +32,33 @@
         @foreach(var bookmark in Model.Bookmarks)
         {
             <div class="bookmark">
-
+                <h3>@bookmark.Name</h3>
+                <p>@bookmark.Description</p>
+                @foreach (var tag in bookmark.Tags)
+                {
+                    <div class="bg-info tag">
+                        <!-- TODO add search link -->
+                        <a href="">@tag.Tag1</a>
+                    </div>
+                }
             </div>
         }
     </div>
 </div>
-
+}
 <style>
+    .tag{
+        padding-left: 2px;
+        padding-right: 2px;
+        margin-left: 2px;
+        margin-right: 2px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        float: left;
+    }
+
     .bookmark{
         background-color: aliceblue;
         width: inherit;

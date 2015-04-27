@@ -14,10 +14,13 @@ namespace APIShare.ViewModels
     public class SearchUserResult
     {
         public int UserID { get; set; }
+        public string AlreadyFollowing { get; set; }
         public string Username { get; set; }
         public string Name { get; set; }
         public byte[] Avatar { get; set; }
         public string Bio { get; set; }
+
+        public List<string> Tags { get; set; }
     }
 
     public class SearchLibraryResult
@@ -25,5 +28,8 @@ namespace APIShare.ViewModels
         public int LibraryID { get; set; }
         public string LibraryName { get; set; }
         public string Description { get; set; }
+
+        public List<string> Tags { get; set; }
     }
+
 }

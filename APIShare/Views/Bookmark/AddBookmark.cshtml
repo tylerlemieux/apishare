@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "AddBookmark";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form id="add-bookmark-form">
+    <table>
+        <tr>
+            <td>Name: </td><td><input type="text" class="form-control" id="bookmark-name-input"/></td>
+        </tr>
+        <tr>
+            <td>Description: </td><td><textarea class="form-control" id="bookmark-description-input"></textarea></td>
+        </tr>
+        <tr>
+            <td>Link: </td>
+            <td><input type="url" class="form-control" id="bookmark-link-input"/></td>
+        </tr>
+        <tr>
+            <td>Tags: </td>
+            <td><input type="text" class="form-control" id="tag-input"/><input type="button" class="btn btn-primary" id="add-tag-btn" value="Add Tag"/></td>
+        </tr>
+        <tr><td>Added Tags (Click to remove): </td><td class="tag-view"></td></tr>
+        <tr><td colspan="2"><input type="submit" /></td></tr>
+    </table>
+
+</form>
+
+<script>
+    var tags = [];
+    $(function () {
+        $.ajax({
+            url: "/Bookmark/GetTags",
+            dataType: 'json',
+            success: function(response){
+                tags = response;
+                $('.tag-view').autocomplete({ source: tags });
+            }
+        });
+    });
+
+    $(document).on('click', '.tag-to-add', function () {
+        $(this).remove();
+    });
+
+    $('#add-bookmark-form').submit(function (e) {
+        e.preventDefault;
+        var tagsToAdd = [];
+        $('.tag-view').children('.tag-to-add').each(function () {
+            tagsToAdd.push($(this).text());
+        });
+        var description = $('#bookmark-description-input').val();
+        var name = $('#bookmark-name-input').val();
+        var link = $('#bookmark-link-input').val();
+
+        $('#add-tag-btn').click(function () {
+            var appendHTML = '<div class="tag-to-add">' + $('#tag-input').val() + '</div>';
+            $('.tag-view').append(appendHTML);
+        });
+    });
+
+    
+</script>

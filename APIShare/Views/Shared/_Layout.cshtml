@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - API Share</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
 
     <style>
         .sidebar{
@@ -15,6 +16,8 @@
             margin-top: 51px;
         }
     </style>
+
+
 </head>
 <body>
 
@@ -108,5 +111,21 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+    $(document).ready(function () {
+        $('#nav-search-submit').click(function () {
+            alert("AYEEEE");
+            var query = $('#nav-search').val();
+            if (query != "" && query != null) {
+                window.location = "/Search/Index?searchQuery=" + query;
+            } else {
+                window.location = "/Search/Index";
+            }
+
+        });
+    });
+    </script>
+
 </body>
 </html>

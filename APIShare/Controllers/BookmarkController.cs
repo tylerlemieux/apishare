@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using APIShare.Models;
+using APIShare.Models.Helpers;
 
 namespace APIShare.Controllers
 {
@@ -19,15 +20,60 @@ namespace APIShare.Controllers
             return PartialView();
         }
 
+
+        public PartialViewResult AddBookmark()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
+        public JsonResult GetTags()
+        {
+            APIToolEntities context = new APIToolEntities();
+            var tags =
+                (from t in context.Tags
+                 select t.Tag1).ToArray();
+            return Json(tags, JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>
         /// Creates a new bookmark
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult CreateBookmark()
+        public JsonResult CreateBookmark(string name, string description, string link, string[] tags)
         {
+            if(name != null && description != null && link != null)
+            {
+                Bookmark bookmark = new Bookmark();
+                bookmark.Name = name;
+                bookmark.Description = description;
+                bookmark.Website = link;
+                bookmark.AddedDate = DateTime.Now;
 
-            return Json(false);
+                APIToolEntities context = new APIToolEntities();
+                context.Bookmarks.Add(bookmark);
+                context.SaveChanges();
+
+                int bookmarkId = bookmark.BookmarkID;
+                foreach(var tag in tags)
+                {
+                    BookmarkTag bookmarkTag = new BookmarkTag();
+                    bookmarkTag.TagID = TagHelper.CheckTag(tag);
+                    bookmarkTag.BookmarkID = bookmarkId;
+
+                    context.BookmarkTags.Add(bookmarkTag);
+                }
+
+                context.SaveChanges();
+
+                return Json(new { Success = true });
+
+            }
+            else
+            {
+                return Json(new {Success = false, ErrorMessage = "Must provide name, description, and link"});
+            }
         }
 
         /// <summary>
