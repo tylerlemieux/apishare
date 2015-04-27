@@ -1,8 +1,99 @@
-﻿
+﻿@model APIShare.ViewModels.UserVM
 @{
-    ViewBag.Title = "User";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "User - " + Model.Username;
 }
+@if (Model != null)
+{
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="https://sp.yimg.com/ib/th?id=JN.LQYi3lJPDovPLiyoX5tYEQ&pid=15.1&P=0" class="img-thumbnail" />
+            </div>
+            <div class="col-md-9">
+                <h1>@Session["Username"]</h1>
+                <p class="lead">
+                    @Model.Bio
+                </p>
+                <p>
+                    @foreach (var skill in Model.Skills)
+                    {
+                        <div class="tag">
+                            <a href="@Html.Display("/Search/Index?searchQuery=" + skill.Tag1)">@skill.Tag1</a>
+                        </div>
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @if (Model.Bookmarks != null)
+            {
+                foreach (var bookmark in Model.Bookmarks)
+                {
+                    <div class="bookmark">
+                        <h2 style="margin-top:5px"><a href="#">@bookmark.Name</a></h2>
+                        <p>@bookmark.Description</p>
 
-<h2>User</h2>
+                        @foreach (var tag in bookmark.Tags)
+                        {
+                            <div class="tag"><a href="@Html.Display("/Search/Index?searchQuery=" + tag.Tag1)">@tag.Tag1</a></div>
+                        }
+                        <div class="end-tags"></div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}
+<style>
+    .bookmark {
+        clear: both;
+        border: solid 1px;
+        padding-top: 5px;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-bottom: 5px;
+        margin-top: 5px;
+        margin-left: 10%;
+        margin-right: 10%;
+        margin-bottom: 5px;
+        width: 80%;
+        min-width: 500px;
+        min-height: 100px;
+        background-color: aliceblue;
+    }
 
+
+    .tag {
+        float: left;
+        background-color: azure;
+        padding-left: 4px;
+        padding-right: 4px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        margin-top: 1px;
+        margin-left: 1px;
+        margin-right: 1px;
+        margin-bottom: 1px;
+        color: deepskyblue;
+        border: solid 1px lavender;
+        border-radius: 2px;
+        font-size: 11px;
+    }
+
+        .tag a {
+            color: deepskyblue;
+        }
+
+        .tag a:hover {
+            color: deepskyblue;
+            text-decoration: none;
+        }
+
+    .end-tags {
+        clear: both;
+    }
+
+</style>

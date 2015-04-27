@@ -38,18 +38,16 @@ namespace APIShare.Controllers
                          //join bt in context.BookmarkTags on b.BookmarkID equals bt.BookmarkID
                          //join t in context.Tags on bt.TagID equals t.TagID
                          where ub.UserID == viewModel.UserID
-                         //group ub by new  
-                         //{
-                         //   ub.BookmarkID,
-                         //   b.Name,
-                         //   b.Description
-                         //} into groupedBookmarks
                          select new BookmarkVM
                          {
                              BookmarkID = b.BookmarkID,
                              Description = b.Description,
                              Name = b.Name,
-                             //Tags = groupedBookmarks
+                             Tags =
+                                (from t in context.Tags
+                                 join bt in context.BookmarkTags on t.TagID equals bt.TagID
+                                 where bt.BookmarkID == b.BookmarkID
+                                 select t).ToList()
                          }).ToList();
 
                     viewModel.Skills =
