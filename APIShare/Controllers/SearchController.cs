@@ -17,18 +17,18 @@ namespace APIShare.Controllers
         /// <param name="searchString">string a user is searching for</param>
         /// <param name="tag">tag a user is searching for</param>
         /// <returns></returns>
-        public ActionResult Index(string searchString, string tag)
+        public ActionResult Index(string searchQuery, string tag)
         {
             SearchVM searchResults = null;
-            if (searchString != null)
+            if (searchQuery != null)
             {
-                searchResults = SearchModel.Search(searchString);
+                searchResults = SearchModel.Search(searchQuery);
             }
 
-            if(tag != null)
-            {
-                throw new NotImplementedException("tag search not yet added");
-            }
+            //if(tag != null)
+            //{
+            //    throw new NotImplementedException("tag search not yet added");
+            //}
 
             return View(searchResults);
         }

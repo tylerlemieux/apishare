@@ -1,9 +1,9 @@
 ﻿@model APIShare.ViewModels.SearchVM
 @{
-    ViewBag.Title = "Search";
+    ViewBag.Title = "Search Results";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<!--
 <div class="row">
     <div class="col-md-12">
         <div class="input-group">
@@ -12,10 +12,12 @@
         </div>
     </div>
 </div>
+    -->
 <div class="row">
     <div class="col-md-12">
         @if(Model != null)
         {
+            <h2>Results for search: @Request.Params["searchQuery"]</h2>
             if (Model.Libraries != null)
             {
                 foreach (var library in Model.Libraries)
@@ -27,7 +29,7 @@
 
                         @foreach (var tag in library.Tags)
                         {
-                            <div class="tag"><a href="@Html.Action("Search", "Search", new {tag = tag})">@tag</a></div>
+                            <div class="tag"><a href="@Html.Display("/Search/Index?searchQuery=" + tag)">@tag</a></div>
                         }
                         <div class="end-tags"></div>
                     </div>
@@ -41,13 +43,13 @@
                         <button class="btn btn-sm btn-default btn-follow pull-right addFollow" data-user-id="@user.UserID">
                             <b class="follow-btn-text">@user.AlreadyFollowing</b>
                         </button>
-                        <h2 style="margin-top:5px"><a href="#">@user.Name</a></h2>
+                        <h2 style="margin-top:5px"><a href="#">@user.Username</a></h2>
                         <p>@user.Bio</p>
 
                         <span style="float: left; font-size:12px; padding-top:2px">Skills: </span>
                         @foreach (var tag in user.Tags)
                         {
-                            <div class="tag"><a href="@Html.Action("Search", "Search", new {tag = tag})">tag</a></div>
+                            <div class="tag"><a href="@Html.Display("/Search/Index?searchQuery=" + tag)">@tag</a></div>
                         }
                         <div class="end-tags"></div>
                     </div>

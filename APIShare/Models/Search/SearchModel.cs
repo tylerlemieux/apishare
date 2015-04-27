@@ -27,13 +27,18 @@ namespace APIShare.Models.Search
             {
                 var searchResult = 
                 (from l in context.Bookmarks
-                 where l.Name.Contains("/" + searchString + "/")
-                    || l.Description.Contains("/" + searchString + "/")
+                 where l.Name.Contains(searchString)
+                    || l.Description.Contains(searchString)
                  select new SearchLibraryResult
                  {
                      LibraryID = l.BookmarkID,
                      LibraryName = l.Name,
-                     Description = l.Description
+                     Description = l.Description,
+                     Tags = 
+                        (from bt in context.BookmarkTags
+                         join t in context.Tags on bt.TagID equals t.TagID
+                         where bt.BookmarkID == l.BookmarkID
+                         select t.Tag1).ToList()
                  }).ToList();
 
                 return searchResult;
@@ -45,15 +50,21 @@ namespace APIShare.Models.Search
             {
                 var searchResult =
                 (from u in context.Users
-                 where u.Username.Contains("/" + searchString + "/")
-                    || u.Name.Contains("/" + searchString + "/")
+                 where u.Username.Contains(searchString)
+                    || u.Name.Contains(searchString)
                  select new SearchUserResult
                  {
                      UserID = u.UserID,
                      Username = u.Username,
                      Avatar = u.Avatar,
                      Bio = u.Bio, 
-                     Name = u.Name
+                     Name = u.Name,
+                     Tags = 
+                        (from us in context.UserSkills
+                         join t in context.Tags on us.TagID equals t.TagID
+                         where us.UserID == u.UserID
+                         select t.Tag1).ToList(),
+                     AlreadyFollowing = "Follow"  //TODO: MAKE THIS SEE IF USER IS BEING FOLLOWED
                  }).ToList();
 
                 return searchResult;
