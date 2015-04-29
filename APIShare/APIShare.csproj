@@ -190,6 +190,7 @@
     <Compile Include="Models\BookmarkTag.cs">
       <DependentUpon>ApiShareContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Engines\RecomendationEngine.cs" />
     <Compile Include="Models\Follower.cs">
       <DependentUpon>ApiShareContext.tt</DependentUpon>
     </Compile>
@@ -282,6 +283,7 @@
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Bookmark\AddBookmark.cshtml" />
     <Content Include="Views\User\EditProfile.cshtml" />
+    <Content Include="Views\User\Friends.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

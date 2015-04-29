@@ -32,7 +32,8 @@
         {
             foreach (var bookmark in Model.Bookmarks)
             {
-            <div class="bookmark">
+            <div class="bookmark" data-bookmark-id="@bookmark.BookmarkID">
+                <button class="remove-bookmark pull-right btn btn-default btn-sm"><b>Remove</b></button>
                 <h2 style="margin-top:5px"><a href="#">@bookmark.Name</a></h2>
                 <p>@bookmark.Description</p>
 
@@ -105,3 +106,20 @@
         margin-bottom: 5px;
     }
 </style>
+
+@section scripts{
+    <script>
+        $('.remove-bookmark').click(function () {
+            var bookmarkHTML = $(this).parent();
+            var bookmarkId = bookmarkHTML.data('bookmark-id');
+            $.ajax({
+                url: "/Bookmark/RemoveBookmark?bookmarkId="+bookmarkId,
+                type: "DELETE",
+                contentType: 'application/json',
+                success: function () {
+                    alert('deleted');
+                }
+            });
+        });
+    </script>
+}

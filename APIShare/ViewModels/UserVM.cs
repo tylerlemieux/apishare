@@ -22,4 +22,12 @@ namespace APIShare.ViewModels
         public int UserID { get; set; }
         public string Username { get; set; }
     }
+
+    public class FriendsVM
+    {
+        public int UserID { get; set; }
+        public string Username { get; set; }
+        public string Bio { get; set; }
+        public List<string> Tags { get; set; }
+    }
 }

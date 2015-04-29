@@ -121,6 +121,32 @@ namespace APIShare.Controllers
             return Json(false);
         }
 
+        public ActionResult Friends()
+        {
+            using(APIToolEntities context = new APIToolEntities())
+            {
+                int userId = (int)Session["UserID"];
+
+                List<FriendsVM> friends =
+                    (from u in context.Users
+                     join f in context.Followers on u.UserID equals f.UserBeingFollowedID
+                     where f.FollowerID == u.UserID
+                     select new FriendsVM
+                     {
+                         UserID = u.UserID,
+                         Bio = u.Bio,
+                         Username = u.Username ?? u.Email,
+                         Tags = 
+                            (from t in context.Tags
+                             join ut in context.UserSkills on t.TagID equals ut.TagID
+                             where ut.UserID == u.UserID
+                             select t.Tag1).ToList()
+                     }).ToList();
+
+                return View(friends);
+            }
+        }
+
         public ActionResult EditProfile()
         {
             using (APIToolEntities context = new APIToolEntities())

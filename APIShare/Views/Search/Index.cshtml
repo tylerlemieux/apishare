@@ -3,16 +3,6 @@
     ViewBag.Title = "Search Results";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!--
-<div class="row">
-    <div class="col-md-12">
-        <div class="input-group">
-            <input type="text" placeholder="Search" class="form-control" id="search-query" />
-            <button class="input-group-btn btn btn-default"id="search-btn"><span class="glyphicon glyphicon-search"></span></button>
-        </div>
-    </div>
-</div>
-    -->
 <div class="row">
     <div class="col-md-12">
         @if(Model != null)
@@ -26,7 +16,7 @@
                         <button class="btn btn-sm btn-default btn-follow pull-right addRemoveBookmark" data-bookmark-id="@library.LibraryID"><span style="font-size: 16px; padding-top:3px" class="glyphicon glyphicon-star-empty" /></button>
                         <h2 style="margin-top:5px"><a href="#">@library.LibraryName</a></h2>
                         <p>@library.Description</p>
-
+                        
                         @foreach (var tag in library.Tags)
                         {
                             <div class="tag"><a href="@Html.Display("/Search/Index?searchQuery=" + tag)">@tag</a></div>
@@ -43,7 +33,7 @@
                         <button class="btn btn-sm btn-default btn-follow pull-right addFollow" data-user-id="@user.UserID">
                             <b class="follow-btn-text">@user.AlreadyFollowing</b>
                         </button>
-                        <h2 style="margin-top:5px"><a href="#">@user.Username</a></h2>
+                        <h2 style="margin-top:5px"><a href="@Html.Display("/User/User?userId=" + user.UserID)">@user.Username</a></h2>
                         <p>@user.Bio</p>
 
                         <span style="float: left; font-size:12px; padding-top:2px">Skills: </span>

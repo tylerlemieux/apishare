@@ -1,0 +1,90 @@
+﻿@model List<APIShare.ViewModels.FriendsVM>
+@{
+    ViewBag.Title = "Friends";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Friends</h2>
+@foreach (var friend in Model)
+{
+    <div class="search-result">
+        <button class="btn btn-sm btn-default btn-follow pull-right unfollow" data-user-id="@friend.UserID">
+            <b class="follow-btn-text">Unfollow</b>
+        </button>
+        <h2 style="margin-top:5px"><a href="@Html.Display("/User/User?userId=" + friend.UserID)">@friend.Username</a></h2>
+        <p>@friend.Bio</p>
+
+        <span style="float: left; font-size:12px; padding-top:2px">Skills: </span>
+        @foreach (var tag in friend.Tags)
+        {
+            <div class="tag"><a href="@Html.Display("/Search/Index?searchQuery=" + tag)">@tag</a></div>
+        }
+        <div class="end-tags"></div>
+    </div>
+}
+
+@section styles{
+    <style>
+        .search-result {
+            clear: both;
+            border: solid 1px;
+            padding-top: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-bottom: 5px;
+            margin-top: 5px;
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-bottom: 5px;
+            width: 80%;
+            min-width: 500px;
+            min-height: 100px;
+            background-color: aliceblue;
+        }
+
+        .tag {
+            float: left;
+            background-color: azure;
+            padding-left: 4px;
+            padding-right: 4px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            margin-top: 1px;
+            margin-left: 1px;
+            margin-right: 1px;
+            margin-bottom: 1px;
+            color: deepskyblue;
+            border: solid 1px lavender;
+            border-radius: 2px;
+            font-size: 11px;
+        }
+
+            .tag a {
+                color: deepskyblue;
+            }
+
+                .tag a:hover {
+                    color: deepskyblue;
+                    text-decoration: none;
+                }
+
+        .end-tags {
+            clear: both;
+        }
+
+        .btn-follow {
+            margin-top: 5px;
+        }
+    </style>
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('.unfollow').click(function () {
+                var userId = $(this).data('user-id');
+                //TODO: AJAX TO UNFOLLOW
+            });
+        });
+    </script>
+}

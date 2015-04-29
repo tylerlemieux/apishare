@@ -58,7 +58,7 @@
                             <li>@Html.ActionLink("My Profile", "Index", "Home")</li>
                             <li class="divider"></li>
                             <li><a href="#">Settings</a></li>
-                            <li><a href="#">Logout</a></li>
+                            <li id="logout"><a href="#">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -123,6 +123,21 @@
             }
 
         });
+
+        $('#logout').click(function () {
+            $.ajax({
+                url: "/Authentication/Logout",
+                type: "DELETE",
+                contentType: 'application/json',
+                success: function () {
+                    window.location = "/Home/LandingPage";
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            });
+        });
+        
     });
     </script>
 
