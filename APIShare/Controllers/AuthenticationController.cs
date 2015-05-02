@@ -102,7 +102,7 @@ namespace APIShare.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpPost]
         public JsonResult Logout()
         {
             try

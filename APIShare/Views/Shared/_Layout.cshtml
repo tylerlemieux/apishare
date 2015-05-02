@@ -40,7 +40,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Profile", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Friends", "Index", "User")</li>
+                    <li>@Html.ActionLink("Friends", "Friends", "User")</li>
                     <li>@Html.ActionLink("Discover", "Index", "Home")</li><!--NOT YET CREATED-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -127,7 +127,7 @@
         $('#logout').click(function () {
             $.ajax({
                 url: "/Authentication/Logout",
-                type: "DELETE",
+                type: "POST",
                 contentType: 'application/json',
                 success: function () {
                     window.location = "/Home/LandingPage";

@@ -8,10 +8,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - API Share</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css")    
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+
+    @Styles.Render("~/Content/font-awesome/css/font-awesome.min.css")
+    @Styles.Render("~/Content/animate.min.css")
+    @Styles.Render("~/Content/creative.css")
+
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/jquery.easing.js")
+    @Scripts.Render("~/Scripts/jquery.fittext.js")
+    @Scripts.Render("~/Scripts/wow.min.js")
+    @Scripts.Render("~/Scripts/creative.js")
+   
     <script>
         $(document).ready(function () {
             $('#login').click(function () {
@@ -26,7 +38,7 @@
                         if (result.Success === true) {
                             window.location = "/Home/"
                         }
-                        else {
+                        else{
                             $('#login-error').html('<div class="alert alert-danger">Username/Password combo does not exist</div>');
                         }
                     }
@@ -39,7 +51,6 @@
                 var password = $('#registration-password').val();
                 var confirmPassword = $('#registration-confirm-password').val();
                 if (confirmPassword === password) {
-                    alert("sending ajax");
                     $.ajax({
                         url: "/Authentication/Register",
                         method: 'post',
@@ -49,7 +60,7 @@
                                 window.location = "/Home/"
                             }
                             else {
-                                $('#login-error').html('<div class="alert alert-danger">'+result.ErrorMessage+'</div>');
+                                $('#registration-error').html('<div class="alert alert-danger">'+result.ErrorMessage+'</div>');
                             }
                         }
                     });
@@ -58,11 +69,101 @@
         });
     </script>
 </head>
-<body>
+<body id="page-top" style="background-color: #4A423F">
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1>API Share</h1>
+                <hr>
+                <p>The Library and API social bookmarking tool!<br />Find and save your favorite libraries to easily access in the future!</p>
+                <a href="#about" class="btn btn-primary btn-xl page-scroll">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-primary" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">Get Started!</h2>
+                    <hr class="light">
+                    <div class="col-md-6">
+                        <h2 class="section-heading">Login</h2>
+                        <hr class="light" />
+                        <div id="login-error"></div>
+                        <table>
+                            <tr><td style="color: #fff">Username: </td><td><input class="form-control" type="text" id="login-username" placeholder="Username" /></td></tr>
+                            <tr><td style="color: #fff">Password: </td><td><input class="form-control" type="password" id="login-password" placeholder="Password" /></td></tr>        
+                        </table>
+                        <a class="btn btn-default btn-xl" id="login">Login</a>
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="section-heading">Register</h2>
+                        <hr class="light" />
+                        <div id="registration-error"></div>
+                        <table>
+                            <tr><td style="color: #fff">Username: </td><td><input class="form-control" type="text" id="registration-username" placeholder="Username" /></td></tr>
+                            <tr><td style="color: #fff">Email: </td><td><input class="form-control" type="text" id="registration-email" placeholder="Email" /></td></tr>
+                            <tr><td style="color: #fff">Password: </td><td><input class="form-control" type="password" id="registration-password" placeholder="Password" /></td></tr>
+                            <tr><td style="color: #fff">Confirm Password: </td><td><input class="form-control" type="password" id="registration-confirm-password" placeholder="Confirm Password" /></td></tr>
+                        </table>
+                        <a class="btn btn-default btn-xl" id="register">Register</a>
+                        <!-- end registration form-->
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" style="background-color: #fff">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">At Your Service</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-diamond wow bounceIn text-primary"></i>
+                        <h3>Sturdy Templates</h3>
+                        <p class="text-muted">Our templates are updated regularly so they don't break.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-paper-plane wow bounceIn text-primary" data-wow-delay=".1s"></i>
+                        <h3>Ready to Ship</h3>
+                        <p class="text-muted">You can use this theme as is, or you can make changes!</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-newspaper-o wow bounceIn text-primary" data-wow-delay=".2s"></i>
+                        <h3>Up to Date</h3>
+                        <p class="text-muted">We update dependencies to keep things fresh.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-heart wow bounceIn text-primary" data-wow-delay=".3s"></i>
+                        <h3>Made with Love</h3>
+                        <p class="text-muted">You have to make your websites with love these days!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!--
     <div class="container">
         <div class="row" style="background-color: orangered; min-height:300px">
             <div class="col-md-12">
-                <!-- TODO some sort of page header here -->
             </div>
         </div>
         <div class="row" style="background-color: blueviolet; min-height:300px">
@@ -106,6 +207,6 @@
                 <button id="register" class="btn btn-primary btn-lg">Register</button>
             </div>
         </div>
-    </div>
+    </div>-->
 </body>
 </html>
