@@ -45,7 +45,7 @@ namespace APIShare.Models.Engines
                     {
                         foreach (var user in this.Users)
                         {
-                            if (user.LikedLibraries[i] == true && user.LikedLibraries[j] == true)
+                            if (user.LikedLibraries[this.AllLibraries[i]] == true && user.LikedLibraries[this.AllLibraries[j]] == true)
                             {
                                 connectionCount++;
                             }
@@ -81,17 +81,42 @@ namespace APIShare.Models.Engines
                 var v1 = v;
                 v = transitionMatrix.Multiply(v).Multiply(1 - c).Add(u.ToColumnMatrix().Multiply(c));
                 var differenceVector = v1.Subtract(v);
-                //SET EPSILON TO THE SUM OF THE ABSOLUTE VALUE
-                var difference = differenceVector.ColumnAbsoluteSums();
+                //SET EPSILON TO THE SUM OF THE ABSOLUTE VALUEa
                 epsilon = 0;
-                difference.First();
-                epsilon = 0;
+                var differenceEnumerable = differenceVector.Enumerate();
+                foreach(var entry in differenceEnumerable)
+                {
+                    epsilon += Math.Abs(entry);
+                }
             }
 
+            var likelynessVector = v.Enumerate();
             //LOOK AT THE ORDER
-            //SORT LIBRARIES 
-            //RETURN THEM
-            return new int[0];
+            var length = likelynessVector.Count();
+            int[] orderedIds = new int[length];
+
+            //Sort through the array then find highest
+            //Add the corrusponding id into the new orderedIds array
+            //Set the old one in the likelynessVector to 0
+            var lv = likelynessVector.ToArray();
+            for (int i = 0; i < lv.Length; i++ )
+            {
+                int highestIndex = 0;
+                double highestVal = -1;
+                for(int j = 0; j < lv.Length; j++)
+                {
+                    //If this current likelieness is higher, set it
+                    if(lv[j] > highestVal)
+                    {
+                        highestVal = lv[j];
+                        highestIndex = j;
+                    }
+                }
+                orderedIds[i] = this.AllLibraries[highestIndex];
+                lv[highestIndex] = -1;
+            }
+
+            return orderedIds;
         }
 
     }

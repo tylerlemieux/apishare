@@ -95,30 +95,81 @@ namespace APIShare.Controllers
         [HttpPost]
         public JsonResult Follow(int userToFollowId)
         {
-            throw new NotImplementedException();
-            return Json(false);
+            try
+            {
+                APIToolEntities context = new APIToolEntities();
+                int userId = (int)Session["UserID"];
+                Follower newFollow = new Follower();
+                //TODO change this to N and make other user need to 
+                    // allow based on security settings
+                newFollow.AllowFollow = "Y";
+                newFollow.FollowDate = DateTime.Now;
+                newFollow.UserBeingFollowedID = userToFollowId;
+                newFollow.FollowerID = userId;
+
+                context.Followers.Add(newFollow);
+                context.SaveChanges();
+
+                return Json(new { Success = true });
+            }
+            catch(Exception)
+            {
+                return Json(new { Success = false });
+            }
         }
 
         /// <summary>
         /// Unfollows a user
         /// </summary>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpPost]
         public JsonResult Unfollow(int userToUnfollowId)
         {
-            throw new NotImplementedException();
-            return Json(false);
+            try
+            {
+                using (APIToolEntities context = new APIToolEntities())
+                {
+                    int userId = (int)Session["UserID"];
+                    var followToDelete = context.Followers.Single(f => f.UserBeingFollowedID == userToUnfollowId
+                        && f.FollowerID == userId);
+
+                    context.Followers.Remove(followToDelete);
+                    context.SaveChanges();
+                }
+                return Json(new { Success = true });
+            }
+            catch(Exception)
+            {
+                return Json(new { Success = false });
+            }
         }
 
         /// <summary>
         /// Allows a user to edit their account information and profile
         /// </summary>
         /// <returns></returns>
-        [HttpPut]
-        public JsonResult EditInformation()
+        [HttpPost]
+        public JsonResult EditInformation(string type, string newValue)
         {
-            throw new NotImplementedException();
-            return Json(false);
+            APIToolEntities context = new APIToolEntities();
+            int userId = (int)Session["UserID"];
+            var user = context.Users.Single(u => u.UserID == userId);
+            if(type == "bio")
+            {
+                user.Bio = newValue;
+            }
+            //ADD OTHER INFORMATION
+
+            context.SaveChanges();
+
+            return Json(new { Success = true });
+        }
+
+        [HttpPost]
+        public JsonResult EditTags(string[] tags)
+        {
+
+            return Json(true); 
         }
 
         public ActionResult Friends()
@@ -130,7 +181,7 @@ namespace APIShare.Controllers
                 List<FriendsVM> friends =
                     (from u in context.Users
                      join f in context.Followers on u.UserID equals f.UserBeingFollowedID
-                     where f.FollowerID == u.UserID
+                     where f.FollowerID == userId
                      select new FriendsVM
                      {
                          UserID = u.UserID,

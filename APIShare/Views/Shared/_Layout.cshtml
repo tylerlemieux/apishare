@@ -41,7 +41,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Profile", "Index", "Home")</li>
                     <li>@Html.ActionLink("Friends", "Friends", "User")</li>
-                    <li>@Html.ActionLink("Discover", "Index", "Home")</li><!--NOT YET CREATED-->
+                    <li>@Html.ActionLink("Discover", "Index", "Discover")</li><!--NOT YET CREATED-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -57,7 +57,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li>@Html.ActionLink("My Profile", "Index", "Home")</li>
                             <li class="divider"></li>
-                            <li><a href="#">Settings</a></li>
+                            <li>@Html.ActionLink("Settings", "EditProfile", "User")</li>
                             <li id="logout"><a href="#">Logout</a></li>
                         </ul>
                     </li>

@@ -7,12 +7,19 @@
 <h2>Edit Profile</h2>
 
 <div class="edit-panel" data-type="bio">
-    Bio: <div class="current-val">@Model.Bio</div><button class="btn btn-sm btn-default edit-button"><span class="glyphicon glyphicon-edit"></span></button>
-    <textarea class="edit-val-text" style="display: none"></textarea><button style="display: none" class="save-info">Save Changes</button>
+    <b>Bio: </b><div class="current-val">@Model.Bio</div><button class="btn btn-sm btn-default edit-button"><span class="glyphicon glyphicon-edit"></span></button>
+    <textarea class="edit-val-text" style="display: none"></textarea><button style="display: none" class="btn btn-primary save-info">Save Changes</button>
 </div>
 <div class="edit-panel">
 
 </div>
+
+@section styles{
+    <style>
+       
+    </style>
+    
+}
 
 @section scripts{
     <script>
@@ -40,8 +47,16 @@
             display.show();
             
             var dataType = $(this).parent().data('type');
+            var newValue = $(this).siblings('.edit-val-text').val();
             //TODO: AJAX TO ACTUALLY UPDATE THE FIELD
+            $.ajax({
+                url: "/User/EditInformation",
+                method: "post",
+                data: { type: dataType, newValue: newValue },
+                success: function () {
+                }
 
+            });
         });
     </script>
 }

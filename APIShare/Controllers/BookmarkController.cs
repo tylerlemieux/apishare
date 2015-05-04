@@ -80,16 +80,17 @@ namespace APIShare.Controllers
         /// removes a bookmark from the user's profile
         /// </summary>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpPost]
         public JsonResult RemoveBookmark(int bookmarkId)
         {
             if (Session["UserID"] != null)
             {
+                int userId = (int) Session["UserID"];
                 using (APIToolEntities context = new APIToolEntities())
                 {
                     var bookmarkToDelete =
                     (from ub in context.UserBookmarks
-                     where bookmarkId == ub.BookmarkID && (int) Session["UserID"] == ub.UserID
+                     where bookmarkId == ub.BookmarkID && userId == ub.UserID
                      select ub).FirstOrDefault();
 
                     if(bookmarkToDelete != null)
@@ -123,16 +124,24 @@ namespace APIShare.Controllers
                 int userId = (int)Session["UserID"];
                 using (APIToolEntities context = new APIToolEntities())
                 {
-                    UserBookmark bookmarkToAdd = new UserBookmark();
-                    bookmarkToAdd.BookmarkID = bookmarkId;
-                    bookmarkToAdd.DateAdded = DateTime.Now;
-                    bookmarkToAdd.Favorited = "N";
-                    bookmarkToAdd.UserID = userId;
+                    int count = context.UserBookmarks.Where(u => u.UserID == userId && u.BookmarkID == bookmarkId).Count();
+                    if (count == 0)
+                    {
+                        UserBookmark bookmarkToAdd = new UserBookmark();
+                        bookmarkToAdd.BookmarkID = bookmarkId;
+                        bookmarkToAdd.DateAdded = DateTime.Now;
+                        bookmarkToAdd.Favorited = "N";
+                        bookmarkToAdd.UserID = userId;
 
-                    context.UserBookmarks.Add(bookmarkToAdd);
-                    context.SaveChanges();
+                        context.UserBookmarks.Add(bookmarkToAdd);
+                        context.SaveChanges();
 
-                    return Json(new { Success = true });
+                        return Json(new { Success = true });
+                    }
+                    else
+                    {
+                        return Json(new { Success = false, ErrorMessage = "User has already bookmarked this library" });
+                    }
                 }
             }
             else

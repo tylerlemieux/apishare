@@ -318,12 +318,12 @@
     <Content Include="Views\Bookmark\AddBookmark.cshtml" />
     <Content Include="Views\User\EditProfile.cshtml" />
     <Content Include="Views\User\Friends.cshtml" />
+    <Content Include="Views\Discover\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Bookmark\" />
     <Folder Include="Models\User\" />
-    <Folder Include="Views\Discover\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

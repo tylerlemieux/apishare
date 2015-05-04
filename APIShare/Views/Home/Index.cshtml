@@ -19,7 +19,7 @@
                 @foreach(var skill in Model.Skills)
                 {
                     <div class="tag">
-                        <a href="@Html.Display("/Search/Index?searchQuery=" + skill.Tag1)">@skill.Tag1</a>
+                        <a href="@String.Concat("/Search/Index?searchQuery=", skill.Tag1)">@skill.Tag1</a>
                     </div>
                 }
             </p>
@@ -39,7 +39,7 @@
 
                 @foreach (var tag in bookmark.Tags)
                 {
-                    <div class="tag"><a href="@Html.Display("/Search/Index?searchQuery=" + tag.Tag1)">@tag.Tag1</a></div>
+                    <div class="tag"><a href="@String.Concat("/Search/Index?searchQuery=", tag.Tag1)">@tag.Tag1</a></div>
                 }
                 <div class="end-tags"></div>
             </div>
@@ -112,12 +112,13 @@
         $('.remove-bookmark').click(function () {
             var bookmarkHTML = $(this).parent();
             var bookmarkId = bookmarkHTML.data('bookmark-id');
+            var button = $(this);
             $.ajax({
-                url: "/Bookmark/RemoveBookmark?bookmarkId="+bookmarkId,
-                type: "DELETE",
-                contentType: 'application/json',
+                url: "/Bookmark/RemoveBookmark",
+                method: "POST",
+                data: {bookmarkId: bookmarkId},
                 success: function () {
-                    alert('deleted');
+                    button.parent().remove();
                 }
             });
         });

@@ -8,18 +8,19 @@
         @if(Model != null)
         {
             <h2>Results for search: @Request.Params["searchQuery"]</h2>
+            <div class="alert alert-success" id="response-success" style="display: none">Bookmark was added</div>
             if (Model.Libraries != null)
             {
                 foreach (var library in Model.Libraries)
                 {
                     <div class="search-result">
-                        <button class="btn btn-sm btn-default btn-follow pull-right addRemoveBookmark" data-bookmark-id="@library.LibraryID"><span style="font-size: 16px; padding-top:3px" class="glyphicon glyphicon-star-empty" /></button>
+                        <button class="btn btn-sm btn-default btn-follow pull-right addBookmark" data-bookmark-id="@library.LibraryID">Add Bookmark</button>
                         <h2 style="margin-top:5px"><a href="#">@library.LibraryName</a></h2>
                         <p>@library.Description</p>
                         
                         @foreach (var tag in library.Tags)
                         {
-                            <div class="tag"><a href="@Html.Display("/Search/Index?searchQuery=" + tag)">@tag</a></div>
+                            <div class="tag"><a href="@String.Concat("/Search/Index?searchQuery=", tag)">@tag</a></div>
                         }
                         <div class="end-tags"></div>
                     </div>
@@ -33,13 +34,13 @@
                         <button class="btn btn-sm btn-default btn-follow pull-right addFollow" data-user-id="@user.UserID">
                             <b class="follow-btn-text">@user.AlreadyFollowing</b>
                         </button>
-                        <h2 style="margin-top:5px"><a href="@Html.Display("/User/User?userId=" + user.UserID)">@user.Username</a></h2>
+                        <h2 style="margin-top:5px"><a href="@String.Concat("/User/User?userId=", user.UserID)">@user.Username</a></h2>
                         <p>@user.Bio</p>
 
                         <span style="float: left; font-size:12px; padding-top:2px">Skills: </span>
                         @foreach (var tag in user.Tags)
                         {
-                            <div class="tag"><a href="@Html.Display("/Search/Index?searchQuery=" + tag)">@tag</a></div>
+                            <div class="tag"><a href="@String.Concat("/Search/Index?searchQuery=", tag)">@tag</a></div>
                         }
                         <div class="end-tags"></div>
                     </div>
@@ -111,18 +112,47 @@
 @section scripts{
     <script>
     	$(document).ready(function(){
-		    $('.addRemoveBookmark').click(function(){
-			    var bookmarkId = $(this).data('bookmark-id');
-			    $(this).children().toggleClass('glyphicon-star-empty glyphicon-star');
+    	    $('.btn-follow').click(function () {
+		        var bookmarkId = $(this).data('bookmark-id');
+		        var button = $(this);
+
+			    //add
+			    $.ajax({
+			        url: "/Bookmark/AddBookmark",
+			        data: { bookmarkId: bookmarkId },
+			        method: "post",
+			        success: function () {
+			            $('#response-success').show();
+			        }
+			    });
+
 		    });
 
 		    $('.addFollow').click(function(){
 			    var userId = $(this).data('user-id');
-			    
-			    if($('.follow-btn-text').text() == "Follow"){
-				    $(this).children().text("Unfollow");
+			    var button = $(this);
+			    if ($('.follow-btn-text').text() == "Follow") {       
+			        $.ajax({
+			            url: "/User/Follow",
+			            data: { userToFollowId: userId },
+			            dataType: "json",
+			            method: "post",
+			            success: function () {
+			                button.children().text("Unfollow");
+			            }
+			        });
+				    
 			    } else {
-				    $(this).children().text("Follow");
+			        $.ajax({
+			            url: "/User/Unfollow",
+			            method: "post",
+			            data: { userToUnfollowId: userId },
+			            success: function (response) {
+			                if (response.Success) {
+			                    button.children().text("Follow");
+			                }
+			            }
+			        });
 			    }
 
 		    });
