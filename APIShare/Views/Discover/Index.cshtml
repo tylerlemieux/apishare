@@ -1,0 +1,72 @@
+﻿@model APIShare.ViewModels.BookmarkVM[]
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Recommended for you:</h2>
+@foreach (var library in Model)
+{
+<div class="search-result">
+    <h2 style="margin-top:5px"><a href="@String.Concat("/Search/Index?searchQuery=", library.Name)">@library.Name</a></h2>
+    <p>@library.Description</p>
+
+    @foreach (var tag in library.Tags)
+    {
+        <div class="tag"><a href="@String.Concat("/Search/Index?searchQuery=", tag.Tag1)">@tag.Tag1</a></div>
+    }
+    <div class="end-tags"></div>
+</div>
+}
+
+
+@section styles{
+    <style>
+    .search-result {
+            clear: both;
+            border: solid 1px;
+            padding-top: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-bottom: 5px;
+            margin-top: 5px;
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-bottom: 5px;
+            width: 80%;
+            min-width: 500px;
+            min-height: 100px;
+            background-color: aliceblue;
+        }
+
+        .tag {
+            float: left;
+            background-color: azure;
+            padding-left: 4px;
+            padding-right: 4px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            margin-top: 1px;
+            margin-left: 1px;
+            margin-right: 1px;
+            margin-bottom: 1px;
+            color: deepskyblue;
+            border: solid 1px lavender;
+            border-radius: 2px;
+            font-size: 11px;
+        }
+
+            .tag a {
+                color: deepskyblue;
+            }
+
+            .tag a:hover {
+                color: deepskyblue;
+                text-decoration: none;
+            }
+
+        .end-tags {
+            clear: both;
+        }
+        </style>
+}
